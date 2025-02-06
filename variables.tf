@@ -26,3 +26,9 @@ variable "name_attributes" {
     error_message = "The variable var.name_attributes.instance must be between 0-100."
   }
 }
+
+variable "government" {
+  type = bool
+  default = false
+  description = "Sets which naming convention to use. If true, use SSC's otherwise use StatCan's."
+}
