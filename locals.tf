@@ -34,11 +34,11 @@ locals {
     }
 
     resource_type_abbreviations_ssc = {
-      "application security group"     = "asg"
-      "disk encryption set"            = "des"
-      "firewall"                       = "fw"
-      "kubernetes service"             = "aks"
-    # "load balancer"                  = "lb"
+      "application security group" = "asg"
+      "disk encryption set"        = "des"
+      "firewall"                   = "fw"
+      "kubernetes service"         = "aks"
+      # "load balancer"                  = "lb"
       "network interface card"         = "nic"
       "network security group"         = "nsg"
       "private endpoint"               = "pe"
