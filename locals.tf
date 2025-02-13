@@ -34,11 +34,11 @@ locals {
     }
 
     resource_type_abbreviations_ssc = {
-      "application security group" = "asg"
-      "disk encryption set"        = "des"
-      "firewall"                   = "fw"
-      "kubernetes service"         = "aks"
-      # "load balancer"                  = "lb"
+      "application security group"     = "asg"
+      "disk encryption set"            = "des"
+      "firewall"                       = "fw"
+      "kubernetes service"             = "aks"
+      "load balancer"                  = "lb"
       "network interface card"         = "nic"
       "network security group"         = "nsg"
       "private endpoint"               = "pe"
@@ -48,8 +48,8 @@ locals {
       "route table"                    = "rt"
       "service endpoint policy"        = "sep"
       "service principal"              = "sp"
-      "user-assigned managed identity" = "msi"
-      "virtual machine"                = "vm"
+      "user-assigned managed identity" = ""
+      "virtual machine"                = ""
       "virtual machine scale set"      = "vmss"
       "virtual network"                = "vnet"
       # "azure data factory"             = "adf"
@@ -70,14 +70,27 @@ locals {
       # "subnet"                         = "snet"
     }
 
+    resource_names_exception = {
+      # For any resources that does not follow the convention <dept code><environment><CSP Region>-<userDefined-string>-suffix
+      "network interface card" = "${var.name_attributes_ssc.parent_object_name}-${var.user_defined}-nic${var.name_attributes_ssc.instance}"
+      "network security group" = "${var.name_attributes_ssc.parent_object_name}-${var.user_defined}-nsg"
+      "public ip address"      = "${var.name_attributes_ssc.parent_object_name}-${var.user_defined}-pip${var.name_attributes_ssc.instance}"
+      "resource group"         = "${local.common_convention_base_ssc}-${var.name_attributes_ssc.owner}-${var.user_defined}-rg"
+      "route table"            = "${var.name_attributes_ssc.parent_object_name}-rt"
+    }
+
     common_conv_prefixes_statcan = {
       for resource_type, abbrev in local.resource_abbreviations_statcan :
       resource_type => "${local.convention_base_statcan}-${abbrev}"
     }
 
     common_conv_prefixes_ssc = {
-      for resource_type, abbrev in local.resource_abbreviations_ssc :
-      resource_type => "${local.common_convention_base_ssc}-${var.user_defined}-${abbrev}"
+      for resource_type, abbrev in local.resource_type_abbreviations_ssc :
+      resource_type => (
+        contains(keys(local.resource_names_exception), resource_type)
+        ? local.resource_names_exception[resource_type]
+        : "${local.common_convention_base_ssc}-${var.user_defined}-${abbrev}"
+      )
     }
 
     common_conv_prefixes = var.government ? common_conv_prefixes_ssc : common_conv_prefixes_statcan
