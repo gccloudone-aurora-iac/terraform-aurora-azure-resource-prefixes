@@ -1,4 +1,4 @@
-module "azure_resource_prefixes" {
+module "azure_resource_prefixes_stc" {
   source = "../"
 
   name_attributes = {
@@ -9,6 +9,6 @@ module "azure_resource_prefixes" {
   }
 }
 
-output "azure_resource_prefixes" {
-  value = module.azure_resource_prefixes
+output "azure_resource_prefixes_values_stc" {
+  value = module.azure_resource_prefixes_stc
 }

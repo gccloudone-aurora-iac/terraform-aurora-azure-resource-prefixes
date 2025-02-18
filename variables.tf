@@ -3,18 +3,18 @@ variable "name_attributes" {
     project     = string
     environment = string
     location    = string
-    instance    = string
+    instance    = number
   })
 
   default = {
     project     = ""
     environment = ""
     location    = ""
-    instance    = ""
+    instance    = 0
   }
 
   validation {
-    condition     = (!var.government) || (var.name_attributes.project == "" && var.name_attributes.environment == "" && var.name_attributes.location == "" && var.name_attributes.instance == "")
+    condition     = (!var.government) || (var.name_attributes.project == "" && var.name_attributes.environment == "" && var.name_attributes.location == "" && var.name_attributes.instance == 0)
     error_message = "The variable 'name_attributes' must not be set if the variable 'government' is set to true."
   }
 
@@ -44,7 +44,7 @@ variable "name_attributes_ssc" {
     department_code    = string
     csp_region         = string
     environment        = string
-    instance           = string
+    instance           = number
     owner              = string
     parent_object_name = string
   })
@@ -53,9 +53,9 @@ variable "name_attributes_ssc" {
     department_code    = ""
     csp_region         = ""
     environment        = ""
-    instance           = ""
+    instance           = 0
     owner              = ""
-    parent_object_name = ""
+    parent_object_name = "ParentObjName"
   }
 
   description = <<EOT
@@ -65,12 +65,12 @@ variable "name_attributes_ssc" {
       environment : "Single character code that identifies environment. REQUIRED."
       instance : "The instance number of the object."
       owner : "The name of the resource owner."
-      parent_object_name : "The name of the parent object."
+      parent_object_name : "The name of the parent object without the suffix (if applicable). Ex: GcPcCNR-CORE"
     }
   EOT
 
   validation {
-    condition     = (var.government) || (var.name_attributes_ssc.deparment_code == "" && var.name_attributes_ssc.csp_region == "" && var.name_attributes_ssc.environment == "")
+    condition     = var.government || (var.name_attributes_ssc.department_code == "" && var.name_attributes_ssc.csp_region == "" && var.name_attributes_ssc.environment == "")
     error_message = "The variable 'name_attributes_ssc' must not be set if the variable 'government' is set to false."
   }
 
@@ -100,8 +100,8 @@ variable "name_attributes_ssc" {
   }
 
   validation {
-    condition     = (!var.government || var.name_attributes_ssc.parent_object_name == "" || length(var.name_attributes_ssc.parent_object_name) >= 2 && length(var.name_attributes_ssc.parent_object_name) <= 10)
-    error_message = "The variable parent_object_name must be between 2-10 characters."
+    condition     = (!var.government || var.name_attributes_ssc.parent_object_name == "ParentObjName" || length(var.name_attributes_ssc.parent_object_name) >= 2 && length(var.name_attributes_ssc.parent_object_name) <= 30)
+    error_message = "The variable parent_object_name must be between 2-30 characters."
   }
 }
 

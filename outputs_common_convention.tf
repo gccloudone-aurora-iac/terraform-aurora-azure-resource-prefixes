@@ -4,7 +4,7 @@
 
 output "prefix" {
   description = "The common prefix for an Azure resource name. Under typical circumstances, the resource type acronym would just be appended to the prefix to complete the resource name."
-  value       = local.common_convention_base
+  value       = var.government ? local.common_convention_base_ssc : local.common_convention_base_statcan
 }
 
 // Scope: subscription

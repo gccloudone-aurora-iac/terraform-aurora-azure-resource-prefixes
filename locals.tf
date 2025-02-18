@@ -1,12 +1,11 @@
 locals {
   # The following variables are used to create the standardized naming convention for the resources.
-  location = lookup(local.location_table, replace(lower(var.name_attributes.location), " ", ""))
+  location = var.government ? "" : lookup(local.location_table, replace(lower(var.name_attributes.location), " ", ""))
   instance = format("%02s", var.name_attributes.instance)
 
   common_convention_base_statcan = "${var.name_attributes.project}-${var.name_attributes.environment}-${local.location}-${local.instance}"
   common_convention_base_ssc     = "${var.name_attributes_ssc.department_code}${var.name_attributes_ssc.environment}${var.name_attributes_ssc.csp_region}"
 
-  locals {
     location_table = {
       "canadacentral" = "cc"
       "canadaeast"    = "ce"
@@ -47,27 +46,26 @@ locals {
       "route server"                   = "rs"
       "route table"                    = "rt"
       "service endpoint policy"        = "sep"
-      "service principal"              = "sp"
+      "service principal"              = "spn"
       "user-assigned managed identity" = ""
       "virtual machine"                = ""
       "virtual machine scale set"      = "vmss"
       "virtual network"                = "vnet"
-      # "azure data factory"             = "adf"
-      # "databricks service"             = "dbw"
-      # "web application"                = "wapp"
-      # "application insights"           = "appi"
-      # "azure bastion end-point"        = "bstn"
-      # "network watcher"                = "nw"
-      # "vnet peering"                   = "gwp"
-      # "local network gateway"          = "lgn"
-      # "virtual network gateway"        = "vng"
-      # "load balancer backend pool"     = "lbbp"
-      # "load balancer health probe"     = "lbhp"
-      # "load balancer rule"             = "lbr"
-      # "azure load balancer"            = "alb"
-      # "traffic manager"                = "tm"
-      # "storage account"                = "stg"
-      # "subnet"                         = "snet"
+      "azure data factory"             = "adf"
+      "databricks service"             = "dbw"
+      "web application"                = "wapp"
+      "application insights"           = "appi"
+      "azure bastion end-point"        = "bstn"
+      "network watcher"                = "nw"
+      "vnet peering"                   = "gwp"
+      "local network gateway"          = "lgn"
+      "virtual network gateway"        = "vng"
+      "load balancer backend pool"     = "lbbp"
+      "load balancer health probe"     = "lbhp"
+      "load balancer rule"             = "lbr"
+      "azure load balancer"            = "alb"
+      "traffic manager"                = "tm"
+      "subnet"                         = "snet"
     }
 
     resource_names_exception = {
@@ -77,11 +75,12 @@ locals {
       "public ip address"      = "${var.name_attributes_ssc.parent_object_name}-${var.user_defined}-pip${var.name_attributes_ssc.instance}"
       "resource group"         = "${local.common_convention_base_ssc}-${var.name_attributes_ssc.owner}-${var.user_defined}-rg"
       "route table"            = "${var.name_attributes_ssc.parent_object_name}-rt"
+      "user-assigned managed identity" = "${local.common_convention_base_ssc}_${var.user_defined}"
     }
 
     common_conv_prefixes_statcan = {
-      for resource_type, abbrev in local.resource_abbreviations_statcan :
-      resource_type => "${local.convention_base_statcan}-${abbrev}"
+      for resource_type, abbrev in local.resource_type_abbreviations_statcan :
+      resource_type => "${local.common_convention_base_statcan}-${abbrev}"
     }
 
     common_conv_prefixes_ssc = {
@@ -93,7 +92,6 @@ locals {
       )
     }
 
-    common_conv_prefixes = var.government ? common_conv_prefixes_ssc : common_conv_prefixes_statcan
+    common_conv_prefixes = var.government ? local.common_conv_prefixes_ssc : local.common_conv_prefixes_statcan
 
-  }
 }
