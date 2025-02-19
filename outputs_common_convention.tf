@@ -15,6 +15,22 @@ output "resource_group_prefix" {
   value       = local.common_conv_prefixes["resource group"]
 }
 
+// Scope: tenant
+// Length: 1-90
+// Valid Characters: Alphanumeric, underscore, hyphen, spaces
+output "management_group_prefix" {
+  description = "The prefix of an Azure Resource Group."
+  value       = local.common_conv_prefixes["resource group"]
+}
+
+// Scope: tenant
+// Length: 1-90
+// Valid Characters: Alphanumeric, underscore, hyphen, spaces
+output "subscription_prefix" {
+  description = "The prefix of an Azure Resource Group."
+  value       = local.common_conv_prefixes["resource group"]
+}
+
 ###############
 ### Network ###
 ###############
@@ -84,6 +100,14 @@ output "route_table_prefix" {
 }
 
 // Scope: resource group
+// Length: 2-80
+// Valid Characters:Alphanumerics, underscores, periods, and hyphens. Start with alphanumeric. End with alphanumeric or underscore.
+output "route" {
+  description = "The prefix of a route for a route table"
+  value       = local.common_conv_prefixes["route"]
+}
+
+// Scope: resource group
 // Length: 1-80
 // Valid Characters: Alphanumerics, underscores, periods, and hyphens. Start with alphanumeric. End alphanumeric or underscore.
 output "service_endpoint_policy_prefix" {
@@ -98,6 +122,103 @@ output "virtual_network_prefix" {
   description = "The prefix of an Azure Virtual Network."
   value       = local.common_conv_prefixes["virtual network"]
 }
+
+// Scope: virtual network
+// Length: 2-64
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "subnet_prefix" {
+  description = "The prefix of a subnet for a virtual network"
+  value       = local.common_conv_prefixes["subnet"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "bastion_end_point" {
+  description = "The prefix of an Azure Bastion End-point"
+  value       = local.common_conv_prefixes["bastion end-point"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "virtual_network_gateway" {
+  description = "The prefix of a virtual network gateway"
+  value       = local.common_conv_prefixes["bastion end-point"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "local_network_gateway" {
+  description = "The prefix of a virtual network gateway"
+  value       = local.common_conv_prefixes["bastion end-point"]
+}
+
+// Scope: virtual network
+// Length: 1-80
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "connection" {
+  description = "The prefix of a connection for a virtual network"
+  value       = local.common_conv_prefixes["connection"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "network_security_group_rule" {
+  description = "The prefix of a network security group rule."
+  value       = local.common_conv_prefixes["network security group rule"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "load_balancer_front_end_interface" {
+  description = "The prefix of a load balancer front end interface"
+  value       = local.common_conv_prefixes["load balancer front end interface"]
+}
+
+// Scope: load balancer
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "load_balancer_rules" {
+  description = "The prefix of a load balancer rule"
+  value       = local.common_conv_prefixes["load balancer rules"]
+}
+
+// Scope: load balancer
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "load_balancer_backend_pool" {
+  description = "The prefix of a load balancer backend pool"
+  value       = local.common_conv_prefixes["load balancer front end interface"]
+}
+
+// Scope: load balancer
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "load_balancer_health_probe" {
+  description = "The prefix of a load balancer health probe"
+  value       = local.common_conv_prefixes["load balancer front end interface"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "azure_application_gateway" {
+  description = "The prefix of an azure application gateway"
+  value       = local.common_conv_prefixes["azure application gateway"]
+}
+
+// Scope: resource group
+// Length: 1-63
+// Valid Characters: Alphanumeric, hyphen and underscore
+output "traffic_manager_profile" {
+  description = "The prefix of a traffic manager profile"
+  value       = local.common_conv_prefixes["traffic manager profile"]
+}
+
 
 ###############
 ### Compute ###
@@ -142,6 +263,40 @@ output "virtual_machine_scale_set_prefix" {
   description = "The prefix of a Virtual Machine Scale Set (VMSS)"
   value       = local.common_conv_prefixes["virtual machine scale set"]
 }
+
+// Scope: resource group
+// Length: 3-64
+// Valid Characters: Alphanumerics, underscores, and hyphens.
+output "azure_data_bricks_prefix" {
+  description = "The prefix of an azure data brick service"
+  value       = local.common_conv_prefixes["databricks service"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "virtual_machine_os_disk_prefix" {
+  description = "The prefix of a managed disk for an OS disk for a virtual machine"
+  value       = local.common_conv_prefixes["virtual machine os disk"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "virtual_machine_os_disk_prefix" {
+  description = "The prefix of a managed disk for an OS disk for a virtual machine"
+  value       = local.common_conv_prefixes["virtual machine data disk"]
+}
+
+// Scope: resource group
+// Length: 1-80
+// Valid characters: Alphanumeric, hyphen and underscore
+output "availability_set_prefix" {
+  description = "The prefix of an availability set"
+  value       = local.common_conv_prefixes["availability set"]
+}
+
+
 
 ################
 ### Identity ###
