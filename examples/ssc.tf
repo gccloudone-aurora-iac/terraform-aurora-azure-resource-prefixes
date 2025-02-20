@@ -4,11 +4,11 @@ module "azure_resource_prefixes_ssc" {
   government = true
 
   name_attributes_ssc = {
-    department_code = "Sc"
-    environment     = "P"
-    csp_region      = "c"
-    instance        = 1
-    owner           = "ABC"
+    department_code    = "Sc"
+    environment        = "P"
+    csp_region         = "c"
+    instance           = 1
+    owner              = "ABC"
     parent_object_name = "ScPcCNR-CORE"
   }
 

@@ -283,7 +283,7 @@ output "virtual_machine_os_disk_prefix" {
 // Scope: resource group
 // Length: 1-80
 // Valid characters: Alphanumeric, hyphen and underscore
-output "virtual_machine_os_disk_prefix" {
+output "virtual_machine_data_disk_prefix" {
   description = "The prefix of a managed disk for an OS disk for a virtual machine"
   value       = local.common_conv_prefixes["virtual machine data disk"]
 }

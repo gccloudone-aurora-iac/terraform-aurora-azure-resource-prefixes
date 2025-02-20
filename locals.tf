@@ -86,7 +86,6 @@ locals {
     "resource group"                    = "${local.common_convention_base_ssc}-${var.name_attributes_ssc.owner}-${var.user_defined}-rg"
     "route table"                       = "${var.name_attributes_ssc.parent_object_name}-rt"
     "user-assigned managed identity"    = "${local.common_convention_base_ssc}_${var.user_defined}"
-    "system-assigned managed identity"  = "${var.name_attributes_ssc.parent_object_name}"
     "management group"                  = "${local.common_convention_base_ssc}-${var.name_attributes_ssc.owner}-${var.user_defined}"
     "subscription"                      = "${local.common_convention_base_ssc}-${var.name_attributes_ssc.owner}-${var.user_defined}"
     "virtual machine os disk"           = "${var.name_attributes_ssc.parent_object_name}-osdisk${var.name_attributes_ssc.instance}"
@@ -104,11 +103,6 @@ locals {
     "load balancer health probe"        = "${var.name_attributes_ssc.parent_object_name}-${var.user_defined}-lbhp"
   }
 
-  common_conv_prefixes_statcan = {
-    for resource_type, abbrev in local.resource_type_abbreviations_statcan :
-    resource_type => "${local.common_convention_base_statcan}-${abbrev}"
-  }
-
   common_conv_prefixes_ssc = {
     for resource_type, abbrev in local.resource_type_abbreviations_ssc :
     resource_type => (
@@ -117,6 +111,16 @@ locals {
       : "${local.common_convention_base_ssc}-${var.user_defined}-${abbrev}"
     )
   }
+
+  common_conv_prefixes_statcan = merge(
+    {
+      for resource_type in keys(local.common_conv_prefixes_ssc) :
+      resource_type => ""
+    },
+    { for resource_type, abbrev in local.resource_type_abbreviations_statcan :
+      resource_type => "${local.common_convention_base_statcan}-${abbrev}"
+    }
+  )
 
   common_conv_prefixes = var.government ? local.common_conv_prefixes_ssc : local.common_conv_prefixes_statcan
 
