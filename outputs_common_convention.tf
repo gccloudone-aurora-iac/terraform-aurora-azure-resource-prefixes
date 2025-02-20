@@ -20,7 +20,7 @@ output "resource_group_prefix" {
 // Valid Characters: Alphanumeric, underscore, hyphen, spaces
 output "management_group_prefix" {
   description = "The prefix of an Azure Resource Group."
-  value       = local.common_conv_prefixes["resource group"]
+  value       = local.common_conv_prefixes["management group"]
 }
 
 // Scope: tenant
@@ -28,7 +28,7 @@ output "management_group_prefix" {
 // Valid Characters: Alphanumeric, underscore, hyphen, spaces
 output "subscription_prefix" {
   description = "The prefix of an Azure Resource Group."
-  value       = local.common_conv_prefixes["resource group"]
+  value       = local.common_conv_prefixes["subscription"]
 }
 
 ###############
